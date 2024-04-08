@@ -1,6 +1,11 @@
 system identity set name=felial3
 ether1 is 192.168.3.1/24
 ether2 is dhcp client M1
-dhcp server "server1" on ether1 with pool "pool1"
+gre-tunnell1 13.1.13.1/30
+gre-tunnell2 23.1.23.1/30
+ip route 192.168.1.0/24 via 13.1.13.2
+ip route 192.168.2.0/24 via 23.1.23.2
+dhcp server "server1" on ether1 with address pool "pool1"
 dhcp network 192.168.3.0/24 gateway 192.168.3.1
 dhcp pool "pool1" 192.168.3.2-192.168.3.254
+NAT add srcnat with out ether2 in action masquerad
