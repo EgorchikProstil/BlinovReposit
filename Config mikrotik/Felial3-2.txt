@@ -1,0 +1,15 @@
+system identity set name=Felial3-2
+ether1 is 192.168.3.3/24
+ether2 is dhcp client
+vrrp1 is 192.168.3.1/24
+gre-tunnellF1 132.1.132.2/30; via 200.1.1.254
+gre-tunnellF2 232.1.232.2/30; via 200.1.2.254
+gre-tunnellF1-2 125.1.125.1/30; via 200.1.11.254
+gre-tunnellF2-2 225.1.225.1/30; via 200.1.22.254
+ip route 192.168.1.0/24 via 132.1.132.1
+ip route 10.1.1.0/24 via 232.1.232.1
+vrrp on ether1; no preemption; 50 priority; version 2; au ah passwrd "3232"
+dhcp server "server1" on vrrp1 with address pool "pool1"
+dhcp network 192.168.3.0/24 gateway 192.168.3.1
+dhcp pool "pool1" 192.168.3.4-192.168.3.254
+NAT add srcnat with out ether2 in action masquerad

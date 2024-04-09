@@ -1,6 +1,6 @@
 system identity set name=M3
 Loop0 3.3.3.3
-ether1 10.1.2.1/30
+ether1 40.1.2.1/30
 ether2 100.1.2.2/30
 Router-id by Loop
 ospf instance "ospf-instance-1"

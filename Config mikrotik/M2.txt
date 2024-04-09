@@ -1,6 +1,6 @@
 system identity set name=M2
 Loop0 2.2.2.2
-ether1 10.1.1.1/30
+ether1 40.1.1.1/30
 ether2 100.1.1.2/30
 Router-id by loop
 default instance "ospf-instance-1"
