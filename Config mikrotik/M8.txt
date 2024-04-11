@@ -15,5 +15,7 @@ dhcp server "server2" on ether3 (to Felial3-2) with adress pool "pool2"
 dhcp network 200.1.33.0/24 with gateway 200.1.33.1
 dhcp pool "pool2" 200.1.33.2-200.1.33.254
 dhcp static dhcp address for Felial3-2 (200.1.33.254)
-bgp template "M8"; AS 55000; Router-id 6.6.6.6; redistribute connected; next-hop-self
+dns static dns by 30.1.1.2
+bgp template "M8"; AS 55000; Router-id 6.6.6.6; next-hop-self; output netw "F2"
 bgp connection "M7"; template "M8"; remote AS 55000; remote address 7.7.7.7; ibgp
+firewall address list "F2" 200.1.2.0/24; 200.1.33.0/24

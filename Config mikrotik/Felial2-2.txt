@@ -1,13 +1,20 @@
 system identity set name=Felial2-2
 ether1 is 10.1.1.3/24
 ether2 is dhcp client
-vrrp1 is 10.1.1.1/24
+vrrp1 is 10.1.1.1/25 on vlan100
+vrrp2 is 10.1.1.129/25 on vlan1000
+vlan100 is 10.1.1.3/25 on ether1
+vlan1000 is 10.1.1.131/25 on ether1
 gre-tunnellF3 223.1.223.2/30; via 200.1.3.254
 gre-tunnellF3-2 225.1.225.2/30; via 200.1.33.254
 ip route 192.168.1.0/24 via 223.1.223.1
 ip route 192.168.3.0/24 via 223.1.223.1
-vrrp on ether1; 50 priority; no preemption; version 2; au ah passwrd "6969"
+vrrp1 on vlan100; 50 priority; no preemption; version 2; au ah passwrd "6969"
+vrrp2 on vlan1000; 50 priority; no preemption; version 2; au ah passwrd "7070"
 dhcp server "server1" on vrrp1 with address pool "pool1"
-dhcp network 10.1.1.0/24 gateway 10.1.1.1
-dhcp pool "pool1" 10.1.1.4-10.1.1.254
+dhcp network 10.1.1.0/25 gateway 10.1.1.1
+dhcp pool "pool1" 10.1.1.4-10.1.1.126
+dhcp server "server2" on vrrp2 with address pool "pool2"
+dhcp network 10.1.1.128/25 gateway 10.1.1.129
+dhcp pool "pool2" 10.1.1.132-10.1.1.254
 NAT add srcnat with out ether2 in action masquerad

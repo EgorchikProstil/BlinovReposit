@@ -3,6 +3,7 @@ ether1 200.1.3.1/24
 ether2 40.1.1.2/30
 ether3 40.1.2.2/30
 ether4 200.1.11.1/24
+ether7 is dhcp client (NAT)
 Loop0 1.1.1.1
 Router-id by Loop
 ospf instances "ospf-instance-1"
@@ -16,6 +17,8 @@ dhcp server "server2" on ether4 (to Felial1-2) with adress pool "pool2"
 dhcp network 200.1.11.0/24 with gateway 200.1.11.1
 dhcp pool "pool2" 200.1.11.2-200.1.11.254
 dhcp static dhcp address for felial1-2 (200.1.11.254)
-bgp template "M1"; AS 22000; Router-id 1.1.1.1; redistribute connected; next-hop-self
+dns dinamic dns by ether7
+bgp template "M1"; AS 22000; Router-id 1.1.1.1; next-hop-self; default originate; output netw "toF1"
 bgp connection "M2"; template "M1"; remote AS 22000; remote address 2.2.2.2; ibgp rr
 bgp connection "M3"; template "M1"; remote AS 22000; remote address 3.3.3.3; ibgp rr
+firewall address list "toF1" 200.1.3.0/24; 0.0.0.0/0; 200.1.11.0/24
