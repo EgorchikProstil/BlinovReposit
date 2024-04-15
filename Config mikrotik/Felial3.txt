@@ -16,6 +16,15 @@ dhcp network 192.168.3.0/24 gateway 192.168.3.1
 dhcp pool "pool1" 192.168.3.4-192.168.3.254
 dhcp static address for ApacheServer (192.168.3.254)
 dns dinamic dns by ether2
+firewall output on ether1; tcp; action drop
+firewall output on gre-tunnellF1; tcp; action accept
+firewall output on gre-tunnellF1-2; tcp; action accept
+firewall output on gre-tunnellF2; tcp; action accept
+firewall output on gre-tunnellF2-2; tcp; action accept
+firewall input on gre-tunnellF1; tcp; action drop
+firewall input on gre-tunnellF1-2; tcp; action drop
+firewall input on gre-tunnellF2; tcp; action drop
+firewall input on gre-tunnellF2-2; tcp; action drop
 NAT add srcnat with out ether2 in action masquerad
 NAT add srcnat with out gre-tunnellF1 in action masquerad
 NAT add srcnat with out gre-tunnellF1-2 in action masquerad
