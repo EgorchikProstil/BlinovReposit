@@ -6,28 +6,20 @@ gre-tunnellF1 13.1.13.1/30; via 200.1.1.254
 gre-tunnellF2 23.1.23.1/30; via 200.1.2.254
 gre-tunnellF1-2 123.1.123.1/30; via 200.1.11.254
 gre-tunnellF2-2 223.1.223.1/30; via 200.1.22.254
-ip route 192.168.1.0/24 via 13.1.13.2 || F1
-ip route 192.168.1.0/24 via 123.1.123.2 || F1-2
-ip route 10.1.1.0/24 via 23.1.23.2 || F2
-ip route 10.1.1.0/24 via 223.1.223.2 || F2-2
 vrrp on ether1; preemption; 100 priority; version 2; au ah passwrd "3232"
-dhcp server "server1" on vrrp1 with address pool "pool1"; dns 192.168.3.1
+Router-id 3.3.3.3
+ospf instances "ospf-instance-1"
+ospf area with instance "ospf-instance-1"
+ospf interfaces gre-tunnellF1, gre-tunnellF1-2, gre-tunnellF2, gre-tunnellF2-2
+dhcp server "server1" on vrrp1 with address pool "pool1"; dns 192.168.3.1; domain Blinov1.up
 dhcp network 192.168.3.0/24 gateway 192.168.3.1
 dhcp pool "pool1" 192.168.3.4-192.168.3.254
+dhcp static address for ApacheServer (192.168.3.254)
 dns dinamic dns by ether2
 NAT add srcnat with out ether2 in action masquerad
 NAT add srcnat with out gre-tunnellF1 in action masquerad
 NAT add srcnat with out gre-tunnellF1-2 in action masquerad
 NAT add srcnat with out gre-tunnellF2 in action masquerad
 NAT add srcnat with out gre-tunnellF2-2 in action masquerad
-netwatch {
-"F1" 200.1.1.254 simple
-if up (/ip/route enable [find comment="F1"]  /ip/route disable [find comment="F1-2"])
-if down (/ip/route enable [find comment="F1-2"]  /ip/route disable [find comment="F1"])
-}
-netwatch {
-"F2" 200.1.2.254 simple
-if up (/ip/route enable [find comment="F2"]  /ip/route disable [find comment="F2-2"])
-if down (/ip/route enable [find comment="F2-2"]  /ip/route disable [find comment="F2"])
-}
+NAT dstnat port 80 to 192.168.3.254; protocol tcp; action dstnat
 

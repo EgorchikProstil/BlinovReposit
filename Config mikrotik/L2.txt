@@ -1,0 +1,14 @@
+conf t
+vlan 100 
+na VlanPC
+vlan 1000 
+na AdminVlan
+int range e0/0-1 
+sw tr enc dot1q
+sw mo tr
+int range e0/3, e1/0-1
+sw mo ac
+sw ac vl 100
+int e0/2
+sw mo ac
+sw ac vl 1000
