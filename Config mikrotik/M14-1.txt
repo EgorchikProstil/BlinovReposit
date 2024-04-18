@@ -12,4 +12,4 @@ bgp connection "to22000"; template "M14-1"; remote AS 22000; remote address 100.
 isis instance isis; area 00.0000; system-id 4141.4141.4141
 isis interface template instances isis; intefaces ether2,ether3,lo levels l1
 NAT "srcnat" on ether1; action masquerade
-firewall address list "PCISIS" 4.1.4.0/29;
+firewall address list "PCISIS" 200.1.4.0/24;

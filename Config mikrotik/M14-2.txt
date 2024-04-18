@@ -11,4 +11,4 @@ bgp connection "M14-1"; template "M14-2"; remote AS 48000; remote address 141.14
 bgp connection "M14-3"; template "M14-2"; remote AS 48000; remote address 143.143.143.143; ibgp
 isis instance isis; area 00.0000; system-id 4242.4242.4242
 isis interface template instances isis; intefaces ether1,ether2,lo levels l1
-firewall address list "PCISIS" 4.1.40/29
+firewall address list "PCISIS" 200.1.4.0/24
